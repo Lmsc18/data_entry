@@ -11,7 +11,7 @@ def intro():
     buffer = io.BytesIO()
 
     df=pd.read_excel('test.xlsx')
-
+    df=df.sort_values(by=['Class'])
     st.write("""
         # VIEW DATA
     """)
@@ -118,13 +118,14 @@ def search_data():
     st.write("""
         # SEARCH DATA
     """)
-    
-    r_no=st.number_input('Roll Number:',value=0,step=1)
+    col1,col2=st.columns(2)
+    r_no=col1.number_input('Roll Number:',value=0,step=1)
+    cls=col2.selectbox("Select class: ",[9,10,11,12])
 
 
     
     if st.button("Search"):
-        q=df[df['Roll No']==r_no]
+        q=df[(df['Roll No']==r_no)&(df['Class']==cls)]
         st.write(q)
 
     
